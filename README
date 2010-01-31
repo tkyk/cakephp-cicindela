@@ -5,7 +5,17 @@ CakePHP Cicindela Library
 Cicindela is a open source recommendation engine. 
 http://code.google.com/p/cicindela2/
 
-This library consists of DataSource and Behavior.
+
+Requirements
+--------------------------
+
+PHP 5, CakePHP 1.2.x, and Cicindela 2
+
+
+Configurations
+--------------------------
+
+This library consists of a DataSource and a Behavior.
 
 * database.php
 
@@ -22,7 +32,7 @@ class DATABASE_CONFIG {
 
 ?>
 
-* Model
+* Models
 
 <?php
 
