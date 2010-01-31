@@ -1,0 +1,89 @@
+
+CakePHP Cicindela Library
+---------------------------------------------
+
+Cicindela is a open source recommendation engine. 
+http://code.google.com/p/cicindela2/
+
+This library consists of DataSource and Behavior.
+
+* database.php
+
+<?php
+
+class DATABASE_CONFIG {
+
+  var $cicindela = array('datasource' => 'cicindela',
+                         'host' => 'cicindela.example.com',
+                         'path' => '/cicindela/',
+                         'set' => 'set_name');
+
+}
+
+?>
+
+* Model
+
+<?php
+
+class ProductRecommendation extends AppModel {
+  var $useDbConfig = 'cicindela';
+  var $actsAs = array('Cicindela');
+}
+
+?>
+
+The behavior provides these methods:
+
+- insert ($data_type, $data)
+- remove ($data_type, $conditions)
+- setCategory ($item_id, $category_id)
+- removeCategory ($item_id, $category_id)
+
+and these find-types:
+
+- find ('for_item', $conditions) => array[integer or string]
+- find ('for_user', $conditions) => array[integer or string]
+- find ('similar_users', $conditions) => array[integer or string]
+
+which are corresponding to the Cicindela Web API.
+http://code.google.com/p/cicindela2/wiki/WebAPI .
+
+Also, you can use these shortcut methods to insert/remove the data.
+
+- pick ($user_id, $item_id)
+- raiting ($user_id, $item_id, $raiting)
+- tag ($user_id, $item_id, $tag_id)
+- uninterested ($user_id, $item_id)
+- removePick ($user_id, $item_id)
+- removeRaiting ($user_id, $item_id, $raiting)
+- removeTag ($user_id, $item_id, $tag_id)
+- removeUninterested ($user_id, $item_id)
+
+Note that Model::save* and Model::delete* cannot be used.
+
+* Controller
+
+<?php
+
+class ProductController extends AppController {
+  var $uses = array('ProductRecommendation');
+
+  function view($itemId) {
+
+    //update recommendation
+    $userId = $this->Session->id();
+    $this->ProductRecommendation->pick($userId, $itemId);
+
+    //get recommendations for the item
+    $recommendIds = $this->ProductRecommendation
+      ->find('for_item',
+             array('item_id' => $itemId));
+    $recommendProducts = $this->Product
+      ->find('all',
+             array('conditions' => array('Product.id' => $recommendIds)));
+
+  }
+
+}
+?>
