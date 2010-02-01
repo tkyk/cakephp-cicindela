@@ -2,7 +2,7 @@
 CakePHP Cicindela Library
 ---------------------------------------------
 
-Cicindela is a open source recommendation engine. 
+Cicindela is an open source recommendation engine. 
 http://code.google.com/p/cicindela2/
 
 
@@ -72,7 +72,7 @@ Also, you can use these shortcut methods to insert/remove the data.
 
 Note that Model::save* and Model::delete* cannot be used.
 
-* Controller
+* Controllers
 
 <?php
 
@@ -97,3 +97,12 @@ class ProductController extends AppController {
 
 }
 ?>
+
+
+License
+--------------------------
+
+Copyright (c) 2010 Takayuki Miwa <i@tkyk.name>
+
+This software is licensed under the MIT License.
+http://opensource.org/licenses/mit-license.php
